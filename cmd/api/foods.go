@@ -3,9 +3,6 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"strconv"
-
-	"github.com/julienschmidt/httprouter"
 )
 
 func (app *application) foodsHandler(w http.ResponseWriter, r *http.Request) {
@@ -13,11 +10,9 @@ func (app *application) foodsHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) foodHandler(w http.ResponseWriter, r *http.Request) {
-	params := httprouter.ParamsFromContext(r.Context())
+	id, err := app.readIDParam(r)
 
-	id, err := strconv.ParseInt(params.ByName("id"), 10, 64)
-
-	if err != nil || id < 1 {
+	if err != nil {
 		http.NotFound(w, r)
 		return
 	}
@@ -29,11 +24,9 @@ func (app *application) createFoodHandler(w http.ResponseWriter, r *http.Request
 }
 
 func (app *application) updateFoodHandler(w http.ResponseWriter, r *http.Request) {
-	params := httprouter.ParamsFromContext(r.Context())
+	id, err := app.readIDParam(r)
 
-	id, err := strconv.ParseInt(params.ByName("id"), 10, 64)
-
-	if err != nil || id < 1 {
+	if err != nil {
 		http.NotFound(w, r)
 		return
 	}
