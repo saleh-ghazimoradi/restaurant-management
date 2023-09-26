@@ -15,9 +15,9 @@ func (app *application) routes() *httprouter.Router {
 
 	router.HandlerFunc(http.MethodGet, "/v1/users/:id", app.userHandler)
 
-	router.HandlerFunc(http.MethodPost, "/v1/users/signup", app.signupHandler)
+	router.HandlerFunc(http.MethodPost, "/v1/users/signup", app.userSignupHandler)
 
-	router.HandlerFunc(http.MethodPost, "/v1/users/login", app.loginHandler)
+	router.HandlerFunc(http.MethodPost, "/v1/users/login", app.userLoginHandler)
 
 	router.HandlerFunc(http.MethodGet, "/v1/foods", app.foodsHandler)
 
