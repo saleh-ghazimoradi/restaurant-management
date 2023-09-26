@@ -40,7 +40,7 @@ func main() {
 	mux.HandleFunc("/v1/healthcheck", app.healthcheckHandler)
 
 	srv := &http.Server{
-		Addr:         fmt.Sprintf("%:d", cfg.port),
+		Addr:         fmt.Sprintf(":%d", cfg.port),
 		Handler:      mux,
 		IdleTimeout:  time.Minute,
 		ReadTimeout:  5 * time.Second,
