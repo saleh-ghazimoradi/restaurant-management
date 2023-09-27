@@ -7,6 +7,9 @@ import (
 	"net/http"
 	"os"
 	"time"
+
+	"github.com/saleh-ghazimoradi/restaurant-management/database"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 const version = "1.0.0"
@@ -20,6 +23,8 @@ type application struct {
 	config config
 	logger *slog.Logger
 }
+
+var foodCollection *mongo.Collection = database.OpenCollection(database.Client, "food")
 
 func main() {
 	var cfg config
