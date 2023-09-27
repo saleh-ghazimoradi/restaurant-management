@@ -20,8 +20,7 @@ type Food struct {
 
 func ValidatorFood(v validator.Validator, food *Food) {
 	v.Check(*food.Name != "", "name", "must be provided")
-	v.Check(len(*food.Name) >= 2, "", "must be at least 2 bytes long")
-	v.Check(len(*food.Name) <= 100, "", "must not be more than 100 bytes long")
+	v.Check(len(*food.Name) >= 2 || len(*food.Name) <= 100, "name", "must be at least 2 bytes long and maximum length of 100 bytes")
 
 	v.Check(*food.Food_image != "", "food_image", "food image must be provided")
 	v.Check(*food.Menu_id != "", "food_menu", "menu id must be provided")
