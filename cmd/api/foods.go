@@ -63,6 +63,10 @@ func (app *application) foodsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = app.writeJSON(w, http.StatusOK, envelope{"foods": allFoods[0]}, nil)
+
+	if err != nil {
+		app.serverErrorResponse(w, r, err)
+	}
 }
 
 func (app *application) foodHandler(w http.ResponseWriter, r *http.Request) {
@@ -144,6 +148,7 @@ func (app *application) createFoodHandler(w http.ResponseWriter, r *http.Request
 	headers.Set("Location", fmt.Sprintf("/v1/foods/%d", food.ID))
 
 	err = app.writeJSON(w, http.StatusCreated, envelope{"food": result}, headers)
+	
 	if err != nil {
 		app.serverErrorResponse(w, r, err)
 	}
@@ -198,7 +203,7 @@ func (app *application) updateFoodHandler(w http.ResponseWriter, r *http.Request
 		updateObj = append(updateObj, bson.E{"updated_at", food.Updated_at})
 
 		upsert := true
-		
+
 		filter := bson.M{"id": id}
 
 		opt := options.UpdateOptions{
