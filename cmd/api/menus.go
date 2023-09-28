@@ -36,6 +36,10 @@ func (app *application) menusHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = app.writeJSON(w, http.StatusOK, envelope{"menu": allMenus}, nil)
+
+	if err != nil {
+		app.serverErrorResponse(w, r, err)
+	}
 }
 
 func (app *application) menuHandler(w http.ResponseWriter, r *http.Request) {
@@ -101,6 +105,7 @@ func (app *application) createMenuHandler(w http.ResponseWriter, r *http.Request
 	headers.Set("Location", fmt.Sprintf("/v1/menus/%d", menu.ID))
 
 	err = app.writeJSON(w, http.StatusCreated, envelope{"menu": result}, headers)
+
 	if err != nil {
 		app.serverErrorResponse(w, r, err)
 	}
@@ -172,8 +177,9 @@ func (app *application) updateMenuHandler(w http.ResponseWriter, r *http.Request
 			app.serverErrorResponse(w, r, err)
 			return
 		}
-		
+
 		err = app.writeJSON(w, http.StatusCreated, envelope{"menu": result}, nil)
+
 		if err != nil {
 			app.serverErrorResponse(w, r, err)
 		}
