@@ -18,7 +18,7 @@ type Menu struct {
 	Menu_id    string             `json:"menu_id"`
 }
 
-func Validator(v validator.Validator, menu *Menu) {
+func ValidatorMenu(v validator.Validator, menu *Menu) {
 	v.Check(menu.Name != "", "name", "must be provided")
 	v.Check(menu.Category != "", "category", "must be provided")
 }
